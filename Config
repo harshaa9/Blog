@@ -1,0 +1,61 @@
+[UWSGI]
+uwsgi --socket 0.0.0.0:8080 --protocol=http --module wsgi --callable app
+
+uwsgi --http-socket :9090 --plugin python --wsgi-file app.py --callable app
+
+uwsgi --ini uwsgi.ini
+
+sudo pip install python-plugin-uwsgi
+
+sudo ln -s wsgi.ini /etc/uwsgi/apps-available/
+
+sudo service uwsgi
+
+sudo ln -s /home/ubuntu/workspace/projects/flaskapp/trunk/flaskapp.conf /etc/nginx/sites-available/
+
+sudo ln -s /etc/nginx/sites-available/flaskapp /etc/nginx/sites-enabled
+
+sudo service nginx restart
+
+[SVN]
+
+sudo apt-get install subversion
+sudo apt-get install openssl-server
+
+sudo mkdir -p /path/svn/repos/
+sudo svnadmin create /path/svn/repos/AppName
+sudo svnserve -d -r /path/svn/repos
+
+sudo vi /path/svn/repos/AppName/conf/svnserve.conf
+sudo vi /path/svn/repos/AppName/conf/passwd
+
+svn import FlaskApp/ svn://10.89.23.132/FlaskApp -m "Initial Import"
+
+ps -ef | grep svnserve 
+3690
+
+svn switch --relocate  svn://172.17.0.108/flaskapp svn://172.17.0.57/flaskapp
+
+svn switch —relocate from to path
+
+8080, 8081, and 8082 
+
+netstat -tulpn
+
+sudo apt-get update && sudo apt-get dist-upgrade
+sudo dpkg --clear-avail
+sudo apt-get update && sudo apt-get dist-upgrade
+
+sudo apt-get install build-essential libssl-dev libffi-dev python-dev
+https://urllib3.readthedocs.io/en/latest/user-guide.html#ssl-py2
+
+SET FOREIGN_KEY_CHECKS = 0; 
+TRUNCATE table1; 
+SET FOREIGN_KEY_CHECKS = 1;
+
+ALTER TABLE t2 ADD INDEX (d), ADD UNIQUE (a);
+
+pip freeze > dump.txt
+cat dump.txt | xargs sudo pip uninstall -y
+
+python -m smtpd -n -c DebuggingServer localhost:25

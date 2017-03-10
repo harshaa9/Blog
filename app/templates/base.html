@@ -1,0 +1,37 @@
+<html>
+  <head>
+    {% if title %}
+    <title>{{ title }} - microblog</title>
+    {% else %}
+    <title>Welcome to microblog</title>
+    {% endif %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <hr>
+  <div class="alert alert-success alert-dismissible">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        {% for message in messages %}
+        <strong>Success!</strong> {{ message }}
+        <br />
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+  </div>
+    <div>Microblog:
+        <a href="{{ url_for('index') }}">Home</a>
+        {% if user.is_authenticated %}
+        <a href="{{ url_for('user', nickname = user.nickname) }}">Your Profile</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+        {% endif %}
+    </div>
+    <hr>
+    {% block content %}{% endblock %}
+  </body>
+</html>
