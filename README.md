@@ -4,6 +4,8 @@ Flask-MySQL(Python 2.7) based minimal blog application uses OAuth for Twitter an
 
 Use run.py to run the application
 
+To import database use database.sql
+
 Certificate verification
 
 It is highly recommended to always use SSL certificate verification. By default, urllib3 does not verify HTTPS requests.
