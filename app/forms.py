@@ -6,11 +6,15 @@ from models import User
 class LoginForm(FlaskForm):
     openid = StringField('openid', validators=[DataRequired()])
     remember_me = BooleanField('remember_me', default=False)
+
+class PostForm(FlaskForm):
+  post = TextAreaField('post', validators = [DataRequired()] )
     
 class EditForm(FlaskForm):
   nickname = StringField('nickname', validators = [DataRequired()])
   about_me = TextAreaField('about_me', validators = [Length(min=0, max=140)])
-  email = StringField('email', validators = [DataRequired(), Email("Please enter proper email address!")])
+  email = StringField('email', validators = [
+    DataRequired(), Email("Please enter proper email address!")])
   
   def __init__(self, original_nickname, original_email, *args, **kwargs):
     FlaskForm.__init__(self, *args, **kwargs)
@@ -25,7 +29,8 @@ class EditForm(FlaskForm):
     user = User.query.filter_by(nickname = self.nickname.data).first()
     email = User.query.filter_by(email = self.email.data).first()
     if user != None:
-      self.nickname.errors.append('This nickname is already in use. Please choose another name.')
+      self.nickname.errors.append(
+        'This nickname is already in use. Please choose another name.')
       self.nickname.errors.append("\n you can use these available nicknames! ")
       self.nickname.errors.append(User.make_unique_nickname(self.nickname.data))
     if email != None:

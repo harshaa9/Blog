@@ -37,3 +37,7 @@ MAIL_PASSWORD = None
 
 #administrator list
 ADMINS = ['you@example.com']
+
+POSTS_PER_PAGE = 2
+
+WHOOSH_BASE = os.path.join(basedir, 'search.sql')

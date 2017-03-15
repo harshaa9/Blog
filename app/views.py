@@ -1,14 +1,20 @@
-from flask import render_template, flash, redirect, url_for, request, g
+from flask import render_template, flash, redirect, url_for, request, g, session
 from app import app, mysql, lm, db
-from .forms import LoginForm, EditForm#, Email_change
+from .forms import LoginForm, EditForm, PostForm#, Email_change
 from flaskext.mysql import MySQL
 from oauth import OAuthSignIn
 from flask_login import login_user, logout_user, current_user
-from models import User
+from models import User, Post
 from flask_security import login_required
 from datetime import datetime
+from config import POSTS_PER_PAGE
 
 lm.login_view = 'index'
+
+@lm.unauthorized_handler
+def unauthorized():
+  flash("Please login into your account first: ")
+  return redirect(url_for('index'))
 
 @app.before_request
 def before_request():
@@ -18,55 +24,49 @@ def before_request():
     db.session.add(user)
     db.session.commit()
     
-def after_login(resp):
-  user = current_user
-  if user is None:
-    nickname = resp.nickname
-    flash("nickname found !")
+def after_login(user):
+  if user:
+    nickname = user.nickname
     if nickname is None or nickname == '':
       nickname = resp.email.split('@')[0]
-    nickname = User.make_unique_nickname(nickname)
-    user = User(nickname = nickname, email = resp.email)
-    flash("nickname added !")
-    db.session.add(user)
-    db.session.commit()
+    if User.query.filter_by(nickname=nickname).first():
+      flash("your default nickname from twitter is already exists:  " + nickname)
+      nickname = User.make_unique_nickname(nickname)
+    flash("Your new nickname is: " + nickname)
+    flash("You can change your nickname name in settings!")
+    return nickname
 
-@app.route('/')
-@app.route('/index')
-def index():
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
+@app.route('/index/<int:page>', methods = ["GET", "POST"])
+def index(page = 1):
   if current_user:
     user = current_user # fake user
   else:
     user = None
-  posts = [  # fake array of posts
-        { 
-            'author': {'nickname': 'John'}, 
-            'body': 'Beautiful day in Portland!' 
-        },
-        { 
-            'author': {'nickname': 'Susan'}, 
-            'body': 'The Avengers movie was so cool!' 
-        }
-    ]
-  return render_template('index.html',title='Home', user=user, posts=posts)
+  form = PostForm()
+  if form.validate_on_submit():
+    post = Post(body=form.post.data, timestamp = datetime.utcnow(), author=user)
+    db.session.add(post)
+    db.session.commit()
+    flash("You post is now live!")
+    return redirect(url_for('index'))
+  if not user.is_anonymous:
+    posts = user.followed_posts().paginate(page, POSTS_PER_PAGE, False)
+  else:
+    posts = None
+  return render_template('index.html',title='Home', user=user, form = form, posts=posts, ret = 'index')
 
 @app.route('/user/<nickname>')
+@app.route('/user/<nickname>/<int:page>')
 @login_required
-def user(nickname):
-  if nickname == current_user.nickname:
+def user(nickname, page = 1):
     user = User.query.filter_by(nickname=nickname).first()
     if user == None:
       flash('User %s not found.' % nickname)
       return redirect(url_for('index'))
-    posts = [
-      {'author': user, 'body': 'Test post #1'},
-      {'author': user, 'body': 'Test post #2'}
-    ]
-    flash('User %s login successful.' % nickname)
-    return render_template('user.html',user=user,posts=posts)
-  else:
-    flash("Your request can't process !. as you cant see other accounts details.!!!")
-    return redirect(url_for('index'))
+    posts = user.posts.paginate(page, POSTS_PER_PAGE, False)
+    return render_template('user.html',user=user,posts=posts, ret = 'user')
 
 # @app.route('/login', methods=['GET', 'POST'])
 # def login():
@@ -103,7 +103,45 @@ def edit():
     form.about_me.data = user.about_me
     form.email.data = user.email
   return render_template('edit.html', form = form, user = user)
-    
+
+@app.route('/follow/<nickname>')
+@login_required
+def follow(nickname):
+  user = User.query.filter_by(nickname=nickname).first()
+  if user is None:
+    flash('user %s not found.' % nickname)
+    return redirect(url_for('index'))
+  if user == current_user:
+    flash("you can\'t follow yourself!")
+    return redirect(url_for('user', nickname = nickname))
+  u = current_user.follow(user)
+  if u is None:
+    flash("Cannot follow " + nickname + '.')
+    return redirect(url_for('user', nickname = nickname))
+  db.session.add(u)
+  db.session.commit()
+  flash('You are now following ' + nickname)
+  return redirect(url_for('user', nickname = nickname))
+
+@app.route('/unfollow/<nickname>')
+@login_required
+def unfollow(nickname):
+  user = User.query.filter_by(nickname = nickname).first()
+  if user is None:
+    flash('user %s not found.' % nickname)
+    return redirect(url_for('index'))
+  if user == current_user:
+    flash("you can\'t unfollow yourself!")
+    return redirect(url_for('user', nickname = nickname))
+  u = current_user.unfollow(user)
+  if u is None:
+    flash("Cannot unfollow " + nickname + '.')
+    return redirect(url_for('user', nickname = nickname))
+  db.session.add(u)
+  db.session.commit()
+  flash('You have stopped following ' + nickname)
+  return redirect(url_for('user', nickname = nickname))
+  
 # @app.route("/Authenticate")
 # def Authenticate():
 #     username = request.args.get('UserName')
@@ -135,11 +173,18 @@ def oauth_callback(provider):
     user = User.query.filter_by(social_id=social_id).first()
     if not user:
         user = User(social_id=social_id, nickname=username, email=email)
+        user.nickname = after_login(user)
         db.session.add(user)
         db.session.commit()
-    login_user(user, True)
-    after_login(user)
-    return redirect(url_for('index'))
+        db.session.add(user.follow(user))
+        db.session.commit()
+    remember_me = False
+#     if 'remember_me' in session:
+#       remember_me = session['remember_me']
+#       session.pop('remember_me', None)
+    login_user(user, True) #remember = remember_me)
+    flash('User %s login successful.' % user.nickname)
+    return redirect(request.args.get('next') or url_for('index'))
 
 @app.errorhandler(404)
 def not_found_error(error):
