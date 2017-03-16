@@ -1,13 +1,14 @@
 from flask import render_template, flash, redirect, url_for, request, g, session
 from app import app, mysql, lm, db
-from .forms import LoginForm, EditForm, PostForm#, Email_change
+from .forms import LoginForm, EditForm, PostForm, SearchForm#, Email_change
 from flaskext.mysql import MySQL
 from oauth import OAuthSignIn
 from flask_login import login_user, logout_user, current_user
 from models import User, Post
 from flask_security import login_required
 from datetime import datetime
-from config import POSTS_PER_PAGE
+from config import POSTS_PER_PAGE, MAX_SEARCH_RESULTS
+from .emails import follower_notification
 
 lm.login_view = 'index'
 
@@ -18,11 +19,25 @@ def unauthorized():
 
 @app.before_request
 def before_request():
-  user = current_user
-  if user.is_authenticated:
+  g.user = current_user
+  if g.user.is_authenticated:
     user.last_seen = datetime.utcnow()
-    db.session.add(user)
+    db.session.add(g.user)
     db.session.commit()
+    g.search_form = SearchForm()
+
+@app.route('/search', methods = ['POST'])
+@login_required
+def search():
+  if not g.search_form.validate_on_submit():
+    return redirect(url_for('index'))
+  return redirect(url_for('search_results', query = g.search_form.search.data))
+
+@app.route('/search_results/<query>')
+@login_required
+def search_results(query):
+  results = Post.query.whoosh_search(query, MAX_SEARCH_RESULTS).all()
+  return render_template('search_results.html', query= query, results=results)
     
 def after_login(user):
   if user:
@@ -57,8 +72,8 @@ def index(page = 1):
     posts = None
   return render_template('index.html',title='Home', user=user, form = form, posts=posts, ret = 'index')
 
-@app.route('/user/<nickname>')
-@app.route('/user/<nickname>/<int:page>')
+@app.route('/user/<nickname>', methods=['GET', 'POST'])
+@app.route('/user/<nickname>/<int:page>', methods=['GET', 'POST'])
 @login_required
 def user(nickname, page = 1):
     user = User.query.filter_by(nickname=nickname).first()
@@ -68,6 +83,13 @@ def user(nickname, page = 1):
     posts = user.posts.paginate(page, POSTS_PER_PAGE, False)
     return render_template('user.html',user=user,posts=posts, ret = 'user')
 
+@app.route('/users_list', methods=['GET', 'POST'])
+@login_required 
+def users_list():
+  user = current_user;
+  users_list = User.query.all()
+  return render_template('users_list.html', user = user, users_list = users_list)
+  
 # @app.route('/login', methods=['GET', 'POST'])
 # def login():
 #     form = LoginForm()
@@ -121,6 +143,7 @@ def follow(nickname):
   db.session.add(u)
   db.session.commit()
   flash('You are now following ' + nickname)
+  follower_notification(user, g.user)
   return redirect(url_for('user', nickname = nickname))
 
 @app.route('/unfollow/<nickname>')

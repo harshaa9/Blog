@@ -29,15 +29,23 @@ OAUTH_CREDENTIALS = {
     }
 }
 
-# mail server settings
-MAIL_SERVER = 'localhost'
-MAIL_PORT = 9999
+# # mail server settings
+MAIL_SERVER = 'localhost'#'smtp.gmail.com'
+MAIL_PORT = 9999 #465
+MAIL_USE_TLS = False
+MAIL_USE_SSL = False # use SSL unless its dev
+
 MAIL_USERNAME = None
 MAIL_PASSWORD = None
+# MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
+# MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
 
 #administrator list
-ADMINS = ['you@example.com']
+ADMINS = ['no-reply@microblog.com']
+
+
 
 POSTS_PER_PAGE = 2
 
 WHOOSH_BASE = os.path.join(basedir, 'search.sql')
+MAX_SEARCH_RESULTS = 50

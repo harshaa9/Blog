@@ -1,6 +1,6 @@
 {% if posts %}
       {% for post in posts.items %}
-      <p><img src="{{ user.avatar(128) }}">{{ post.author.nickname }} says: <b>{{ post.body }}</b></p>
+         {% include "post.html" %}
       {% endfor %} 
     {% endif %}
 

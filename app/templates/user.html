@@ -15,7 +15,7 @@
               <p>{{ user.about_me }}</p>
             {% endif %}
             {% if user.last_seen %}
-              <p><i>Last seen on: {{ user.last_seen }}</i></p>
+              <p><i>Last seen on: {{ momentjs(user.last_seen).calender() }}</i></p>
             {% endif %}
             {% if user.id == current_user.id %}
               <p><a href="{{ url_for('edit') }}">Edit your profile</a></p>
@@ -30,7 +30,7 @@
   <hr>
 {% if posts %}
       {% for post in posts.items %}
-      <p><img src="{{ user.avatar(128) }}">{{ post.author.nickname }} says: <b>{{ post.body }}</b></p>
+         {% include 'post.html' %}
       {% endfor %} 
     {% endif %}
 

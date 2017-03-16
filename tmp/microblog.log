@@ -272,3 +272,166 @@
 2017-03-13 18:33:02,830 INFO: microblog startup [in /home/cabox/workspace/microblog-mysql/app/mail.py:28]
 2017-03-13 18:49:49,140 INFO: microblog startup [in /home/cabox/workspace/microblog-mysql/app/mail.py:28]
 2017-03-13 18:54:29,810 INFO: microblog startup [in /home/cabox/workspace/microblog-mysql/app/mail.py:28]
+2017-03-15 10:09:33,827 INFO: microblog startup [in /home/cabox/workspace/microblog-mysql/app/mail.py:28]
+2017-03-15 10:09:35,521 INFO: microblog startup [in /home/cabox/workspace/microblog-mysql/app/mail.py:28]
+2017-03-15 10:12:01,990 INFO: microblog startup [in /home/cabox/workspace/microblog-mysql/app/mail.py:28]
+2017-03-15 10:19:03,003 INFO: microblog startup [in app/mail.py:28]
+2017-03-15 10:21:48,572 INFO: microblog startup [in /home/cabox/workspace/microblog-mysql/app/mail.py:28]
+2017-03-15 10:23:43,565 INFO: microblog startup [in /home/cabox/workspace/microblog-mysql/app/mail.py:28]
+2017-03-15 10:23:44,268 INFO: microblog startup [in /home/cabox/workspace/microblog-mysql/app/mail.py:28]
+2017-03-15 10:24:10,084 INFO: microblog startup [in /home/cabox/workspace/microblog-mysql/app/mail.py:28]
+2017-03-15 10:24:10,752 INFO: microblog startup [in /home/cabox/workspace/microblog-mysql/app/mail.py:28]
+2017-03-15 10:25:29,023 INFO: microblog startup [in app/mail.py:28]
+2017-03-15 10:27:23,853 INFO: microblog startup [in /home/cabox/workspace/microblog-mysql/app/mail.py:28]
+2017-03-15 10:27:24,517 INFO: microblog startup [in /home/cabox/workspace/microblog-mysql/app/mail.py:28]
+2017-03-15 10:29:25,276 INFO: microblog startup [in app/mail.py:28]
+2017-03-15 10:33:09,752 INFO: microblog startup [in /home/cabox/workspace/microblog-mysql/app/mail.py:28]
+2017-03-15 10:33:10,454 INFO: microblog startup [in /home/cabox/workspace/microblog-mysql/app/mail.py:28]
+2017-03-15 11:16:29,516 INFO: microblog startup [in /home/cabox/workspace/microblog-mysql/app/mail.py:28]
+2017-03-15 11:16:30,236 INFO: microblog startup [in /home/cabox/workspace/microblog-mysql/app/mail.py:28]
+2017-03-15 11:22:56,287 INFO: microblog startup [in /home/cabox/workspace/microblog-mysql/app/mail.py:28]
+2017-03-15 11:23:00,387 ERROR: Exception on /edit [POST] [in /home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask_login.py", line 792, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/cabox/workspace/microblog-mysql/app/views.py", line 112, in edit
+    db.session.commit()
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/sqlalchemy/orm/scoping.py", line 157, in do
+    return getattr(self.registry(), name)(*args, **kwargs)
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/sqlalchemy/orm/session.py", line 874, in commit
+    self.transaction.commit()
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/sqlalchemy/orm/session.py", line 461, in commit
+    self._prepare_impl()
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/sqlalchemy/orm/session.py", line 441, in _prepare_impl
+    self.session.flush()
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/sqlalchemy/orm/session.py", line 2139, in flush
+    self._flush(objects)
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/sqlalchemy/orm/session.py", line 2259, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/sqlalchemy/util/langhelpers.py", line 60, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/sqlalchemy/orm/session.py", line 2223, in _flush
+    flush_context.execute()
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/sqlalchemy/orm/unitofwork.py", line 389, in execute
+    rec.execute(self)
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/sqlalchemy/orm/unitofwork.py", line 548, in execute
+    uow
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/sqlalchemy/orm/persistence.py", line 177, in save_obj
+    mapper, table, update)
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/sqlalchemy/orm/persistence.py", line 737, in _emit_update_statements
+    execute(statement, multiparams)
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 945, in execute
+    return meth(self, multiparams, params)
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/sqlalchemy/sql/elements.py", line 263, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1053, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1189, in _execute_context
+    context)
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1393, in _handle_dbapi_exception
+    exc_info
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/sqlalchemy/util/compat.py", line 203, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1182, in _execute_context
+    context)
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/sqlalchemy/engine/default.py", line 470, in do_execute
+    cursor.execute(statement, parameters)
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/pymysql/cursors.py", line 166, in execute
+    result = self._query(query)
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/pymysql/cursors.py", line 322, in _query
+    conn.query(q)
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/pymysql/connections.py", line 852, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/pymysql/connections.py", line 1053, in _read_query_result
+    result.read()
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/pymysql/connections.py", line 1336, in read
+    first_packet = self.connection._read_packet()
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/pymysql/connections.py", line 1010, in _read_packet
+    packet.check_error()
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/pymysql/connections.py", line 393, in check_error
+    err.raise_mysql_exception(self._data)
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/pymysql/err.py", line 107, in raise_mysql_exception
+    raise errorclass(errno, errval)
+IntegrityError: (pymysql.err.IntegrityError) (1062, u"Duplicate entry 'bhavan0863' for key 'nickname'") [SQL: u'UPDATE users SET nickname=%(nickname)s, email=%(email)s, about_me=%(about_me)s WHERE users.id = %(users_id)s'] [parameters: {'users_id': 2, 'about_me': u'Hi ', 'nickname': u'bhavan0863', 'email': u'manoh@email.com'}]
+2017-03-15 11:25:56,922 ERROR: Exception on /search_results/first [GET] [in /home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask_login.py", line 792, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/cabox/workspace/microblog-mysql/app/views.py", line 38, in search_results
+    results = Post.query.whoosh_search(query. MAX_SEARCH_RESULTS).all()
+AttributeError: 'unicode' object has no attribute 'MAX_SEARCH_RESULTS'
+2017-03-15 11:27:29,788 ERROR: Exception on /search_results/my [GET] [in /home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask_login.py", line 792, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/cabox/workspace/microblog-mysql/app/views.py", line 38, in search_results
+    results = Post.query.whoosh_search(query. MAX_SEARCH_RESULTS).all()
+AttributeError: 'unicode' object has no attribute 'MAX_SEARCH_RESULTS'
+2017-03-15 11:31:39,901 ERROR: Exception on /search_results/my [GET] [in /home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask_login.py", line 792, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/cabox/workspace/microblog-mysql/app/views.py", line 38, in search_results
+    results = Post.query.whoosh_search(query. MAX_SEARCH_RESULTS).all()
+AttributeError: 'unicode' object has no attribute 'MAX_SEARCH_RESULTS'
+2017-03-15 11:31:47,533 ERROR: Exception on /search_results/my [GET] [in /home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/cabox/workspace/myvenv-blog/local/lib/python2.7/site-packages/flask_login.py", line 792, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/cabox/workspace/microblog-mysql/app/views.py", line 38, in search_results
+    results = Post.query.whoosh_search(query. MAX_SEARCH_RESULTS).all()
+AttributeError: 'unicode' object has no attribute 'MAX_SEARCH_RESULTS'
+2017-03-15 11:32:22,732 INFO: microblog startup [in /home/cabox/workspace/microblog-mysql/app/mail.py:28]
+2017-03-15 11:32:23,404 INFO: microblog startup [in /home/cabox/workspace/microblog-mysql/app/mail.py:28]
+2017-03-15 11:33:08,728 INFO: microblog startup [in /home/cabox/workspace/microblog-mysql/app/mail.py:28]
+2017-03-15 12:13:37,420 INFO: microblog startup [in /home/cabox/workspace/microblog-mysql/app/mail.py:28]

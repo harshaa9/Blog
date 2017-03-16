@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>
+  You are logged in as: {{ user.nickname }}
+</h2>
+
+{% for u in users_list %}
+  {% if not u == user %}
+    <table>
+          <tr valign="top">
+            <td>
+              <a href="{{ url_for('user', nickname = u.nickname) }}"><img src="{{ u.avatar(30) }}"></a>
+              <i><a href="{{ url_for('user', nickname = u.nickname) }}">{{ u.nickname }}</a></i>
+            </td>
+          </tr>
+    </table>
+  {% endif %}
+{% endfor %}
+
+{% endblock %}
+          

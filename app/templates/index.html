@@ -2,12 +2,9 @@
 {% block content %}
 <h1>OAuth Demo</h1>
 {% if user.is_authenticated %}
-<font size="3">
-  <a href="{{ url_for('user', nickname = user.nickname) }}">Your Profile</a>
-  <a href="{{ url_for('logout') }}">Logout</a><br/>
-</font>
  <h2>Hi, <a href="{{ url_for('user', nickname = user.nickname) }}">{{ user.nickname }}!</a></h2>
   {% include 'newpost.html' %}
+  <hr>
   {% include 'viewposts.html' %}
  {% else %}
     <h2>I don't know you!</h2>

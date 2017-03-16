@@ -16,9 +16,12 @@
           <tr>
               <td>About yourself:</td>
               <td>{{ form.about_me(cols=32, rows=4) }}</td>
+                  {% for error in form.errors.about_me %}
+                  <br><span style="color: red;">[{{ error }}]</span>
+                  {% endfor %}
           </tr>
           <tr>
-              <td>Email:</td>
+              <td>Email:</td> 
               <td>{{ form.email }}</td>
                   {% for error in form.errors.email %}
                   <br><span style="color: red;">[{{ error }}]</span>
