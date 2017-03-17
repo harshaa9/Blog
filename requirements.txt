@@ -1,5 +1,6 @@
 appdirs==1.4.3
 asn1crypto==0.21.1
+Babel==2.3.4
 blinker==1.4
 certifi==2017.1.23
 cffi==1.9.1
@@ -8,6 +9,7 @@ cryptography==1.8.1
 decorator==4.0.11
 enum34==1.1.6
 Flask==0.12
+Flask-Babel==0.11.1
 Flask-Login==0.3.2
 Flask-Mail==0.9.1
 Flask-MySQL==1.4.0
@@ -28,6 +30,7 @@ pycparser==2.17
 PyMySQL==0.7.10
 pyOpenSSL==16.2.0
 pyparsing==2.2.0
+pytz==2016.10
 rauth==0.7.3
 requests==2.13.0
 six==1.10.0

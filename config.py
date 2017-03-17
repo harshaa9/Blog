@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 WTF_CSRF_ENABLED = True
 SECRET_KEY = 'you-will-never-guess'
 
@@ -29,7 +30,14 @@ OAUTH_CREDENTIALS = {
     }
 }
 
-# # mail server settings
+# ...
+# available languages
+LANGUAGES = {
+    'en': 'English',
+    'es': 'Español'
+}
+
+# mail server settings
 MAIL_SERVER = 'localhost'#'smtp.gmail.com'
 MAIL_PORT = 9999 #465
 MAIL_USE_TLS = False
@@ -42,7 +50,6 @@ MAIL_PASSWORD = None
 
 #administrator list
 ADMINS = ['no-reply@microblog.com']
-
 
 
 POSTS_PER_PAGE = 2

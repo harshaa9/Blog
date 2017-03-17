@@ -2,6 +2,7 @@ from app import app, db, lm
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin
 from hashlib import md5
+import re
 import sys
 if sys.version_info >= (3,0):
   enable_search = False
@@ -29,6 +30,10 @@ class User(UserMixin, db.Model):
                             secondaryjoin = (followers.c.followed_id == id),
                             backref = db.backref('followers', lazy='dynamic'),
                             lazy = 'dynamic')
+  
+  @staticmethod
+  def make_valid_nickname(nickname):
+    return res.sub('[^a-zA-Z0-9_\.]', '', nickname)
   
   def avatar(self, size):
     if self.email:

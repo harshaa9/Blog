@@ -29,15 +29,17 @@ class EditForm(FlaskForm):
       return False
     if self.nickname.data == self.original_nickname and self.email.data != None and self.original_email != None and self.email.data == self.original_email:
       return True
+    if self.nickname.data != User.make_valid_nickname(nickname):
+      self.nickname.errors.append(gettext('This nickname has invalid characters. Please use letter, numbers, dots and underscores only.'))
+      return False
     user = User.query.filter_by(nickname = self.nickname.data).first()
     email = User.query.filter_by(email = self.email.data).first()
     if user != None:
-      self.nickname.errors.append(
-        'This nickname is already in use. Please choose another name.')
-      self.nickname.errors.append("\n you can use these available nicknames! ")
+      self.nickname.errors.append(gettext('This nickname is already in use. Please choose another name.'))
+      self.nickname.errors.append(gettext("\n you can use these available nicknames! "))
       self.nickname.errors.append(User.make_unique_nickname(self.nickname.data))
     if email != None:
-      self.email.errors.append("This email is already in use. Please choose another email.'")
+      self.email.errors.append(gettext("This email is already in use. Please choose another email."))
       return False
     return True
   

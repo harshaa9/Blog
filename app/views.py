@@ -1,5 +1,5 @@
 from flask import render_template, flash, redirect, url_for, request, g, session
-from app import app, mysql, lm, db
+from app import app, mysql, lm, db, babel
 from .forms import LoginForm, EditForm, PostForm, SearchForm#, Email_change
 from flaskext.mysql import MySQL
 from oauth import OAuthSignIn
@@ -7,14 +7,20 @@ from flask_login import login_user, logout_user, current_user
 from models import User, Post
 from flask_security import login_required
 from datetime import datetime
-from config import POSTS_PER_PAGE, MAX_SEARCH_RESULTS
+from config import POSTS_PER_PAGE, MAX_SEARCH_RESULTS, LANGUAGES
 from .emails import follower_notification
+from flask_babel import lazy_gettext
 
 lm.login_view = 'index'
+lm.login_message = lazy_gettext('Please log in to access this page.')
+
+@babel.localeselector
+def get_locale():
+  return 'es' #request.accept_languages.best_match(LANGUAGES.keys())
 
 @lm.unauthorized_handler
 def unauthorized():
-  flash("Please login into your account first: ")
+  flash(lazy_gettext('Please log in to access this page before all'))
   return redirect(url_for('index'))
 
 @app.before_request
@@ -25,6 +31,7 @@ def before_request():
     db.session.add(g.user)
     db.session.commit()
     g.search_form = SearchForm()
+  g.locale = get_locale()
 
 @app.route('/search', methods = ['POST'])
 @login_required
@@ -46,6 +53,7 @@ def after_login(user):
       nickname = resp.email.split('@')[0]
     if User.query.filter_by(nickname=nickname).first():
       flash("your default nickname from twitter is already exists:  " + nickname)
+      nickname = User.make_valid_nickname(nickname)
       nickname = User.make_unique_nickname(nickname)
     flash("Your new nickname is: " + nickname)
     flash("You can change your nickname name in settings!")
@@ -112,6 +120,8 @@ def logout():
 def edit():
   user = current_user
   form = EditForm(user.nickname, user.email)
+  if not user.email:
+    flash('Please enter your email!')
   if form.validate_on_submit():
     user.nickname = form.nickname.data
     user.about_me = form.about_me.data
@@ -207,7 +217,7 @@ def oauth_callback(provider):
 #       session.pop('remember_me', None)
     login_user(user, True) #remember = remember_me)
     flash('User %s login successful.' % user.nickname)
-    return redirect(request.args.get('next') or url_for('index'))
+    return redirect(request.args.get('next') or url_for('edit'))
 
 @app.errorhandler(404)
 def not_found_error(error):
