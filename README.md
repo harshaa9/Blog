@@ -1,4 +1,4 @@
-# microblog
+# Blog
 
 Flask-MySQL(Python 2.7) based minimal blog application uses OAuth for Twitter and Facebook.
 
